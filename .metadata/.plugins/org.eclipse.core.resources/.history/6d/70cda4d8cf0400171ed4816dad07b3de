@@ -1,0 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" import="java.util.*" 
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body bgcolor="green" bgimage="tiger.jpj">
+
+<a href="login.jsp">
+<input type="submit" value="LogIn"><br/></a>
+
+<a href="register.jsp">
+<input align="right" type= "submit" value="Register"></a><br/>
+
+<a href="details.jsp">
+<input align="right" type= "submit" value="All Details"></a><br/>
+
+<img alt="logo" src="tiger.jpg">
+
+<% Date d=new Date();%><br/>
+<%=d %>
+</body>
+</html>

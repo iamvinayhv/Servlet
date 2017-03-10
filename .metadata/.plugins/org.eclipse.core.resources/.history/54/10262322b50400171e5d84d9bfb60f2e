@@ -1,0 +1,56 @@
+package com.jsp;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class RegisterServlet
+ */
+public class RegisterServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+   
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String uri=request.getRequestURI();
+		
+		if(uri.endsWith("/register"))
+		{
+			String id=request.getParameter("id");
+			String name=request.getParameter("name");
+			String salary=request.getParameter("salary");
+			String dept=request.getParameter("dept");
+			String password=request.getParameter("pwd");
+			String cpass=request.getParameter("cpwd");
+			
+			
+			if(password.equals(cpass))
+			{
+				Pojo pojo=new Pojo();
+				
+				boolean isUpdate=pojo.register(id, name, salary, dept, password);
+				{
+					
+					if(isUpdate)
+					{
+						RequestDispatcher rd=request.getRequestDispatcher("Regcomplete.jsp");
+						rd.forward(request, response);
+					}
+					else
+					{
+						RequestDispatcher rd=request.getRequestDispatcher("error.jsp");
+						rd.forward(request, response);
+					}
+					
+				}
+			}
+		}
+	
+	}
+
+}

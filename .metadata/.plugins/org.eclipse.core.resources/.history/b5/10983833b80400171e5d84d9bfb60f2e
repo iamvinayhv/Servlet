@@ -1,0 +1,66 @@
+package com.jsp;
+
+import java.sql.*;
+
+public class Pojo 
+
+{
+	public Connection getConnection()
+	{
+		Connection connection=null;
+		try 
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			connection =DriverManager.getConnection("jdbc:mysql://localhost:3306/VinayKumar?user=root&password=tiger");
+			
+		} 
+		catch (ClassNotFoundException |SQLException e) 
+		{
+			e.printStackTrace();
+		} 
+		
+		return connection;
+	}
+	
+
+	
+	public boolean register(int id,String name,String sal,String dept,String pass)
+	{
+		String qry="insert into VinayKumar.employee values(?,?,?,?,?)";
+		Connection connection=getConnection();
+		PreparedStatement preparedStatement = null;
+		
+		try 
+		{
+			
+			preparedStatement=connection.prepareStatement(qry);
+			
+			preparedStatement.setString(1, id);
+			preparedStatement.setString(2, name);
+			preparedStatement.setString(3, sal);
+			preparedStatement.setString(4, dept);
+			preparedStatement.setString(5, pass);
+			
+			preparedStatement.executeUpdate();
+		}
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+			return false;
+		}
+		finally
+		{
+			try {
+				connection.close();
+				preparedStatement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return true;
+		
+	}
+}
