@@ -4,13 +4,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Deleted</title>
 </head>
 <body>
+<p style="color:red;">Your Account Deleted</p>
 
-<a href="login.jsp">Click here to login</a><br/>
-<a href="register.jsp">Click here to register</a><br/>
-<a href="delete.jsp">Click here to delete your account</a>
+<a href="register.jsp">Register</a>
+
 
 </body>
 </html>

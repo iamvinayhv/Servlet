@@ -10,6 +10,9 @@
 
 
 <h3>Logged out Successfully</h3>
-<a href="login.jsp">LogIn</a>
+<a href="login.jsp">Login</a><br/>
+<a href="register.jsp">Register</a><br/>
+<a href="delete.jsp">Delete</a>
+
 </body>
 </html>

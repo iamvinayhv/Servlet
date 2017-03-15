@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.plaf.synth.SynthScrollBarUI;
 
@@ -33,7 +34,7 @@ public class DBOperation
 	
 
 	
-	public boolean register(String name,String dept,String mail,String pwd)
+	public boolean register(RegBean rb)
 	{
 		String qry="insert into VinayKumar.logreg values(?,?,?,?)";
 		Connection connection=getConnection();
@@ -44,10 +45,10 @@ public class DBOperation
 			
 			preparedStatement=connection.prepareStatement(qry);
 			
-			preparedStatement.setString(1, name);
-			preparedStatement.setString(2, dept);
-			preparedStatement.setString(3, mail);
-			preparedStatement.setString(4, pwd);
+			preparedStatement.setString(1, rb.getName());
+			preparedStatement.setString(2, rb.getDept());
+			preparedStatement.setString(3, rb.getMail());
+			preparedStatement.setString(4, rb.getPwd());
 			
 			preparedStatement.executeUpdate();
 		}
@@ -72,7 +73,7 @@ public class DBOperation
 	}
 	
 	
-	public boolean login(String mail,String password)
+	public boolean login(LoginBean lb)
 	{
 		
 		Connection connection=getConnection();
@@ -84,13 +85,13 @@ public class DBOperation
 		{
 
 			preparedStatement=connection.prepareStatement(qry);
-			preparedStatement.setString(1, mail);
+			preparedStatement.setString(1, lb.getMail());
 			rs=preparedStatement.executeQuery();
 
 			if(rs.next())
 			{
 				String pwd=rs.getString("Password");
-				if(pwd.equals(password))
+				if(pwd.equals(lb.getPwd()))
 				{
 					return true;
 				}
@@ -107,7 +108,7 @@ public class DBOperation
 	}
 	
 	
-	public String users()
+	public ArrayList users()
 	{
 		Connection connection=getConnection();
 		String qry="select Email from VinayKumar.logreg";
@@ -117,6 +118,8 @@ public class DBOperation
 		String result="";
 		String []resArr;
 		
+		ArrayList al=new ArrayList();
+		
 		try 
 		{
 			preparedStatement=connection.prepareStatement(qry);
@@ -124,7 +127,8 @@ public class DBOperation
 			
 			while(rs.next())
 			{
-				result=result+rs.getString("Email")+" ";
+				//result=result+rs.getString("Email")+" ";
+				al.add(rs.getString("Email"));
 			}
 			
 		} 
@@ -134,13 +138,13 @@ public class DBOperation
 		}
 		
 		
-		return result;
+		return al;
 				
 	}
 	
 	
 	
-	public String details(String mail)
+	public ArrayList details(String mail)
 	{
 		Connection connection=getConnection();
 		
@@ -148,16 +152,19 @@ public class DBOperation
 		
 		ResultSet rs=null;
 		
-		String result="";
+		ArrayList al=new ArrayList();
+				
+		
 		try 
 		{
 			PreparedStatement preparedStatement=connection.prepareStatement(qry);
 			preparedStatement.setString(1, mail);
 			rs=preparedStatement.executeQuery();
-			
 			if(rs.next())
 			{
-				result=result+rs.getString(1)+" "+rs.getString(2)+" "+rs.getString(3);
+				al.add(rs.getString(1));
+				al.add(rs.getString(2));
+				al.add(rs.getString(3));
 			}
 		} 
 		catch (SQLException e) 
@@ -166,26 +173,26 @@ public class DBOperation
 			return null;
 		}
 		
-		return result;
+		return al;
 		
 	}
 	
 	
 	
 	
-	public boolean delete(String mail, String password)
+	public boolean delete(DelBean db)
 	{
 		Connection connection=getConnection();
 		PreparedStatement preparedStatement = null;
-		String qry="delete from VinayKumar.logreg where id=? and password=?";
-		int i=0;
+		String qry="delete from VinayKumar.logreg where Email=? and password=?";
 		
+		int i=0;
 		try
 		{
 			preparedStatement=connection.prepareStatement(qry);
 			
-			preparedStatement.setString(1,mail);
-			preparedStatement.setString(2, password);
+			preparedStatement.setString(1,db.getMail());
+			preparedStatement.setString(2, db.getPwd());
 			i=preparedStatement.executeUpdate();
 		} 
 		catch (SQLException e) 

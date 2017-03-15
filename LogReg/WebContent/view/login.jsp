@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form action="login" method="post">
+<form action="logBean.jsp" method="post">
 E-mail:<input type="text" name="mail"><br/>
 Password:<input type="password" name="pwd"><br/>
 

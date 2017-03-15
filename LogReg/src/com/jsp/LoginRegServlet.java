@@ -1,6 +1,7 @@
 package com.jsp;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,14 +24,15 @@ public class LoginRegServlet extends HttpServlet {
 		
 		if(uri.equals("/LogReg/login"))
 		{
-			String mail=request.getParameter("mail");
-			String password=request.getParameter("pwd");
+			LoginBean rb=(LoginBean) request.getAttribute("login");
+			String mail=rb.getMail();
+			String password=rb.getPwd();
 			
 			if(mail!=""&&password!="")
 			{
 				DBOperation db=new DBOperation();
 				
-				boolean res=db.login(mail, password);
+				boolean res=db.login(rb);
 				if(res)
 				{
 					RequestDispatcher rd=request.getRequestDispatcher("Logcomplete.jsp");
@@ -54,12 +56,13 @@ public class LoginRegServlet extends HttpServlet {
 		
 		if(uri.equals("/LogReg/register"))
 		{
+			RegBean rb=(RegBean)request.getAttribute("reg");
 			
-			String name=request.getParameter("name");
-			String dept=request.getParameter("dept");
-			String mail=request.getParameter("mail");
-			String pwd=request.getParameter("pwd");
-			String cpwd=request.getParameter("cpwd");
+			String name=rb.getName();
+			String dept=rb.getDept();
+			String mail=rb.getMail();
+			String pwd=rb.getPwd();
+			String cpwd=rb.getCpwd();
 			
 			if(name!="" && mail!=""&& dept!="")
 			{
@@ -67,7 +70,7 @@ public class LoginRegServlet extends HttpServlet {
 				{
 					DBOperation db=new DBOperation();
 					
-					boolean isUpdate=db.register(name,dept,mail, pwd);
+					boolean isUpdate=db.register(rb);
 					{
 						if(isUpdate)
 						{
@@ -100,12 +103,10 @@ public class LoginRegServlet extends HttpServlet {
 		if(uri.equals("/LogReg/users"))
 		{
 			DBOperation db=new DBOperation();
-			String users=db.users();
+			ArrayList al=db.users();
 			
-			
-			HttpSession session=request.getSession(true);
-			session.setAttribute("users", users);
 			RequestDispatcher rd=request.getRequestDispatcher("users.jsp");
+			request.setAttribute("users", al);
 			rd.forward(request, response);
 		}
 		
@@ -114,13 +115,12 @@ public class LoginRegServlet extends HttpServlet {
 		{
 			String mail=request.getParameter("mail");
 			DBOperation db=new DBOperation();
-			String details=db.details(mail);
+			ArrayList details=db.details(mail);
 			
 			if(details!=null)
 			{
-				HttpSession session=request.getSession(true);
-				session.setAttribute("details",details);
 				RequestDispatcher rd=request.getRequestDispatcher("details.jsp");
+				request.setAttribute("details", details);
 				rd.forward(request, response);
 			}
 			else
@@ -132,17 +132,40 @@ public class LoginRegServlet extends HttpServlet {
 			
 		}
 		
+		
+		
 		if(uri.equals("/LogReg/logout"))
 		{
 			HttpSession session=request.getSession(false);
 			
 			if(session!=null)
 			{
-				session.removeAttribute("users");
-				session.removeAttribute("details");
-				session.invalidate();
-				
 				RequestDispatcher rd=request.getRequestDispatcher("logout.jsp");
+				rd.forward(request, response);
+			}
+			
+		}
+		
+		
+		
+		if(uri.equals("/LogReg/delete"))
+		{
+			
+			DelBean db=(DelBean) request.getAttribute("delete");
+			String mail=db.getMail();
+			String password=db.getPwd();
+			
+			DBOperation dbo=new DBOperation();
+			boolean del=dbo.delete(db);
+			
+			if(del)
+			{
+				RequestDispatcher rd=request.getRequestDispatcher("deletecomplete.jsp");
+				rd.forward(request, response);
+			}
+			else
+			{
+				RequestDispatcher rd=request.getRequestDispatcher("deleteerror.jsp");
 				rd.forward(request, response);
 			}
 			

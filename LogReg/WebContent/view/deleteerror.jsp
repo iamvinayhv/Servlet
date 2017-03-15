@@ -4,13 +4,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Delete Failed</title>
 </head>
 <body>
 
-<a href="login.jsp">Click here to login</a><br/>
-<a href="register.jsp">Click here to register</a><br/>
-<a href="delete.jsp">Click here to delete your account</a>
+<h3 style="color:red;">Invalid Employee ID or Password</h3>
+
+<p>Try Again!!!</p>
+
+<a href="delete.jsp">
+<input type="submit" value="Delete"><br/></a>
+
 
 </body>
 </html>

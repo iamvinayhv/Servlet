@@ -7,10 +7,15 @@
 <title>Insert title here</title>
 </head>
 <body>
+<form action="delBean.jsp" method="post">
 
-<a href="login.jsp">Click here to login</a><br/>
-<a href="register.jsp">Click here to register</a><br/>
-<a href="delete.jsp">Click here to delete your account</a>
+E-mail:<input type="text" name="mail"><br/>
+Password:<input type="password" name="pwd"><br/>
+
+<input type="submit" value="Delete"><br/></a>
+
+</form>
+
 
 </body>
 </html>

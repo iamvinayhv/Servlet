@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form action="register" method="post">
+<form action="RegBean.jsp" method="post">
 
 Name:<input type="text" name="name"><br/>
 Department:<input type="text" name="dept"><br/>

@@ -8,9 +8,10 @@
 </head>
 <body>
 
-<a href="login.jsp">Click here to login</a><br/>
-<a href="register.jsp">Click here to register</a><br/>
-<a href="delete.jsp">Click here to delete your account</a>
+<jsp:useBean id="reg" class="com.jsp.RegBean" scope="request"></jsp:useBean>
+<jsp:setProperty property="*" name="reg"/>
+
+<jsp:forward page="/register"/>
 
 </body>
 </html>

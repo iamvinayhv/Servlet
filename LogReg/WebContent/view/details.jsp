@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,16 +9,19 @@
 <body>
 
 <h4 style="color:blue;">Details</h4>
-<%String details=(String)session.getAttribute("details"); 
+<%ArrayList details=(ArrayList)request.getAttribute("details");%>
 
-	String[]deta=details.split(" ");
 	
-	for(int i=0;i<deta.length;i++)
+
+	<%for(Object al1:details)
 	{%>
-		
-		<br/><%=deta[i] %>
-		
-	<%}%><br/><br/><br/>
+		<br/><%=al1.toString() %>
+	<%}%>
+	
+	
+
+	
+	<br/><br/>
 
 
 <form action="logout" method="post">

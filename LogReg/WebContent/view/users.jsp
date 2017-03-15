@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,18 +7,18 @@
 <title>Users</title>
 </head>
 <body>
+<%ArrayList al=(ArrayList)request.getAttribute("users"); %>
 
-<%String arr=(String)session.getAttribute("users"); %>
-<%
 
-	String[]use=arr.split(" ");
 	
-	for(int i=0;i<use.length;i++)
+	
+<%
+	for(Object al1:al)
 	{%>
-		
-		<br/><%=use[i] %>
-		
+		<br/><%=al1.toString() %>
 	<%}%>
+
+
 
 <form action="details" method="post">
 

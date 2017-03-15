@@ -17,5 +17,6 @@
     <url-pattern>/users</url-pattern>
     <url-pattern>/details</url-pattern>
     <url-pattern>/logout</url-pattern>
+    <url-pattern>/delete</url-pattern>
   </servlet-mapping>
 </web-app>
