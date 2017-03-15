@@ -206,4 +206,33 @@ public class DBOperation
 			return true;
 		
 	}
+	
+	public boolean check(String mail)
+	{
+		String qry="select Email from VinayKumar.logreg";
+		
+		Connection connection=getConnection();
+		PreparedStatement preparedStatement=null;
+		ResultSet rs=null;
+		
+		try 
+		{
+			preparedStatement=connection.prepareStatement(qry);
+			rs=preparedStatement.executeQuery();
+			
+			while(rs.next())
+			{
+				if(rs.getString("Email").equals(mail))
+				{
+					return false;
+				}
+			}
+		} 
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return true;
+	}
 }

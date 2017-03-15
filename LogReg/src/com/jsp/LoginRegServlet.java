@@ -56,46 +56,58 @@ public class LoginRegServlet extends HttpServlet {
 		
 		if(uri.equals("/LogReg/register"))
 		{
+			
 			RegBean rb=(RegBean)request.getAttribute("reg");
+			DBOperation db=new DBOperation();
+			boolean check=db.check(rb.getMail());
 			
-			String name=rb.getName();
-			String dept=rb.getDept();
-			String mail=rb.getMail();
-			String pwd=rb.getPwd();
-			String cpwd=rb.getCpwd();
-			
-			if(name!="" && mail!=""&& dept!="")
+			if(check)
 			{
-				if(pwd.equals(cpwd))
+				
+				String name=rb.getName();
+				String dept=rb.getDept();
+				String mail=rb.getMail();
+				String pwd=rb.getPwd();
+				String cpwd=rb.getCpwd();
+				
+				if(name!="" && mail!=""&& dept!="")
 				{
-					DBOperation db=new DBOperation();
-					
-					boolean isUpdate=db.register(rb);
+					if(pwd.equals(cpwd))
 					{
-						if(isUpdate)
-						{
-							RequestDispatcher rd=request.getRequestDispatcher("Regcomplete.jsp");
-							rd.forward(request, response);
-						}
-						else
-						{
-							RequestDispatcher rd=request.getRequestDispatcher("error.jsp");
-							rd.forward(request, response);
-						}
 						
+						boolean isUpdate=db.register(rb);
+						{
+							if(isUpdate)
+							{
+								RequestDispatcher rd=request.getRequestDispatcher("Regcomplete.jsp");
+								rd.forward(request, response);
+							}
+							else
+							{
+								RequestDispatcher rd=request.getRequestDispatcher("error.jsp");
+								rd.forward(request, response);
+							}
+							
+						}
+					}
+					else
+					{
+						RequestDispatcher rd=request.getRequestDispatcher("noMatch.jsp");
+						rd.forward(request, response);
 					}
 				}
 				else
 				{
-					RequestDispatcher rd=request.getRequestDispatcher("noMatch.jsp");
+					RequestDispatcher rd=request.getRequestDispatcher("requiredFldsErr.jsp");
 					rd.forward(request, response);
 				}
 			}
 			else
 			{
-				RequestDispatcher rd=request.getRequestDispatcher("requiredFldsErr.jsp");
+				RequestDispatcher rd=request.getRequestDispatcher("alreadyReg.jsp");
 				rd.forward(request, response);
 			}
+			
 		}
 		
 		
